@@ -31,6 +31,7 @@ namespace OnlineTestSystem.Api
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddJwtAuthentication(Configuration);
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddTransient<ITokenService, TokenService>();
 
             services.AddSwaggerGen();
