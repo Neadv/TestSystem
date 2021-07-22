@@ -6,8 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineTestSystem.Api.Data;
+using OnlineTestSystem.Api.Data.Contracts;
 using OnlineTestSystem.Api.Infrastructure.Extensions;
 using OnlineTestSystem.Api.Models;
+using OnlineTestSystem.Api.Models.Contracts;
 using OnlineTestSystem.Api.Services;
 
 namespace OnlineTestSystem.Api
@@ -34,7 +36,9 @@ namespace OnlineTestSystem.Api
             services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddTransient<ITokenService, TokenService>();
 
-            services.AddSwaggerGen();
+            services.AddScoped<ITestRepository, TestRepository>();
+
+            services.AddSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
