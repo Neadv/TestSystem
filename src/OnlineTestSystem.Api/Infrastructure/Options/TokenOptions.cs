@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace OnlineTestSystem.Api.Infrastructure.Options
+namespace OnlineTestSystem.Api.Infrastructure
 {
     public class TokenOptions
     {
@@ -12,6 +12,6 @@ namespace OnlineTestSystem.Api.Infrastructure.Options
 
         public SymmetricSecurityKey GetSymmetricSecurityKey()
             => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key));
-        
+
     }
 }

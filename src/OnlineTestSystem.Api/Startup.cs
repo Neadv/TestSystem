@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using OnlineTestSystem.Api.Data;
 using OnlineTestSystem.Api.Infrastructure.Extensions;
 using OnlineTestSystem.Api.Models;
+using OnlineTestSystem.Api.Services;
 
 namespace OnlineTestSystem.Api
 {
@@ -30,6 +31,7 @@ namespace OnlineTestSystem.Api
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddJwtAuthentication(Configuration);
+            services.AddTransient<ITokenService, TokenService>();
 
             services.AddSwaggerGen();
         }
