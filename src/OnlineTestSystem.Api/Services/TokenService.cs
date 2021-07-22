@@ -45,6 +45,7 @@ namespace OnlineTestSystem.Api.Services
         {
             var claims = new List<Claim>
             {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
