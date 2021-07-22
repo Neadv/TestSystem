@@ -17,7 +17,7 @@ namespace OnlineTestSystem.Api.Data.Contracts
             Set = context.Set<T>();
         }
 
-        public async Task Create(T entity)
+        public async virtual Task Create(T entity)
         {
             if (entity is null)
             {
@@ -28,7 +28,7 @@ namespace OnlineTestSystem.Api.Data.Contracts
             await Context.SaveChangesAsync();
         }
 
-        public async Task Delete(T entity)
+        public async virtual Task Delete(T entity)
         {
             if (entity is null)
             {
@@ -39,12 +39,12 @@ namespace OnlineTestSystem.Api.Data.Contracts
             await Context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async virtual Task<IEnumerable<T>> GetAll()
         {
             return await Set.AsNoTracking().ToListAsync();
         }
 
-        public async Task<T> GetById(object id)
+        public async virtual Task<T> GetById(object id)
         {
             if (id is null)
             {
@@ -54,7 +54,7 @@ namespace OnlineTestSystem.Api.Data.Contracts
             return await Set.FindAsync(id);
         }
 
-        public async Task Update(T entity)
+        public async virtual Task Update(T entity)
         {
             if (entity is null)
             {

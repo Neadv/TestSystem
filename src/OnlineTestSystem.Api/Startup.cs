@@ -36,6 +36,8 @@ namespace OnlineTestSystem.Api
             services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddTransient<ITokenService, TokenService>();
 
+            services.AddAutoMapper(typeof(Startup).Assembly);
+
             services.AddScoped<ITestRepository, TestRepository>();
 
             services.AddSwagger();
