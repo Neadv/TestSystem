@@ -1,3 +1,17 @@
-export const USER_LOGIN = "USER_LOGIN";
-export const USER_LOGOUT = "USER_LOGOUT";
-export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
+const USER_LOGIN = "USER_LOGIN";
+const USER_LOGOUT = "USER_LOGOUT";
+const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
+
+export const userActionTypes = {
+    USER_LOGIN,
+    USER_LOGOUT,
+    USER_LOGIN_ERROR
+};
+
+const LOAD_TEST_CATEGORY = "LOAD_TEST_CATEGORY";
+const ERROR_TEST_LOAD = "ERROR_TEST_LOAD";
+
+export const testActionTypes = {
+    LOAD_TEST_CATEGORY,
+    ERROR_TEST_LOAD
+};

@@ -1,17 +1,17 @@
 import * as accountApi from "../api/accountApi";
 import * as authService from "../services/authService";
-import { USER_LOGIN, USER_LOGIN_ERROR, USER_LOGOUT } from "./actionTypes"
+import { userActionTypes } from "./actionTypes"
 
 function userLogin(user) {
-  return { type: USER_LOGIN, payload: user };
+  return { type: userActionTypes.USER_LOGIN, payload: user };
 }
 
 function userLogout() {
-  return { type: USER_LOGOUT };
+  return { type: userActionTypes.USER_LOGOUT };
 }
 
 function userLoginError(error) {
-  return { type: USER_LOGIN_ERROR, payload: error };
+  return { type: userActionTypes.USER_LOGIN_ERROR, payload: error };
 }
 
 function userLoginApi(username, password) {

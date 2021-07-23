@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_LOGIN_ERROR, USER_LOGOUT } from "./actionTypes";
+import { userActionTypes } from "./actionTypes";
 
 const initialState = {
   user: null,
@@ -7,17 +7,17 @@ const initialState = {
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {
-    case USER_LOGIN:
+    case userActionTypes.USER_LOGIN:
       return {
         user: action.payload,
         error: null
       };
-    case USER_LOGOUT:
+    case userActionTypes.USER_LOGOUT:
       return {
         user: null,
         error: null
       };
-    case USER_LOGIN_ERROR:
+    case userActionTypes.USER_LOGIN_ERROR:
       return {
         user: null,
         error: action.payload
