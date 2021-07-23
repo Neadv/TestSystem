@@ -7,11 +7,11 @@ namespace OnlineTestSystem.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccoutController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly IAuthorizationService _authorizationService;
 
-        public AccoutController(IAuthorizationService authorizationService)
+        public AccountController(IAuthorizationService authorizationService)
         {
             _authorizationService = authorizationService;
         }

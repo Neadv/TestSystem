@@ -40,6 +40,8 @@ namespace OnlineTestSystem.Api
 
             services.AddScoped<ITestRepository, TestRepository>();
 
+            services.AddCors();
+
             services.AddSwagger();
         }
 
@@ -55,6 +57,13 @@ namespace OnlineTestSystem.Api
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 });
             }
+
+            app.UseCors(opts =>
+            {
+                opts.AllowAnyMethod();
+                opts.AllowAnyHeader();
+                opts.AllowAnyOrigin();
+            });
 
             app.UseRouting();
 
