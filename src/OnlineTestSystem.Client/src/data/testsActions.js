@@ -72,6 +72,22 @@ function loadQuestionsApi(testId) {
   }
 }
 
+function checkResult(result){
+  return {type: testActionTypes.CHECK_RESULT, payload: result};
+}
+
+function checkResultApi(testId, answers){
+  return dispatch => {
+    testApi.checkTest(testId, answers)
+      .then(res => {
+        if (res.data)
+          dispatch(checkResult(res.data));
+      }).catch(err => {
+        dispatch(errorLoadTest("Error"));
+      })
+  }
+}
+
 export const testActions = {
   loadCategories,
   errorLoadTest,
@@ -81,5 +97,7 @@ export const testActions = {
   addTest,
   loadTestByIdApi,
   loadQuestions,
-  loadQuestionsApi
+  loadQuestionsApi,
+  checkResult,
+  checkResultApi
 };

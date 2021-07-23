@@ -16,8 +16,13 @@ function loadQuestion(testId){
     return api.get("test/questions/" + testId);
 }
 
+function checkTest(testId, answers){
+    return api.post("test/check/" + testId, answers);
+}
+
 export const testApi = {
     loadTestByCategory,
     loadTestById,
-    loadQuestion
+    loadQuestion,
+    checkTest
 };

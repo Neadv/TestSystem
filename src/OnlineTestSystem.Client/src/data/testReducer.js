@@ -4,6 +4,7 @@ const initialState = {
   categories: [],
   tests: [],
   questions: [],
+  result: null,
   error: null
 }
 
@@ -37,6 +38,12 @@ export function testsReducer(state = initialState, action) {
         questions: action.payload,
         error: null
       };
+      case testActionTypes.CHECK_RESULT:
+        return {
+          ...state,
+          error: null,
+          result: action.payload
+        }
     default:
       return state;
   }
