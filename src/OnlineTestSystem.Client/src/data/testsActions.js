@@ -43,7 +43,7 @@ function addTest(test) {
   return { type: testActionTypes.ADD_TEST, payload: test };
 }
 
-function loadTestByIdApi(id){
+function loadTestByIdApi(id) {
   return dispatch => {
     testApi.loadTestById(id)
       .then(res => {
@@ -55,6 +55,23 @@ function loadTestByIdApi(id){
   }
 }
 
+function loadQuestions(questions) {
+  return { type: testActionTypes.LOAD_QUESTIONS, payload: questions };
+}
+
+function loadQuestionsApi(testId) {
+  return dispatch => {
+    testApi.loadQuestion(testId)
+      .then(res => {
+        if (res.data) {
+          dispatch(loadQuestions(res.data));
+        }
+      }).catch(err => {
+        dispatch(errorLoadTest("Error"));
+      });
+  }
+}
+
 export const testActions = {
   loadCategories,
   errorLoadTest,
@@ -62,5 +79,7 @@ export const testActions = {
   loadTests,
   loadTestsApi,
   addTest,
-  loadTestByIdApi
+  loadTestByIdApi,
+  loadQuestions,
+  loadQuestionsApi
 };

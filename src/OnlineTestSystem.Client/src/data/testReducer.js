@@ -3,6 +3,7 @@ import { testActionTypes } from "./actionTypes";
 const initialState = {
   categories: [],
   tests: [],
+  questions: [],
   error: null
 }
 
@@ -29,6 +30,12 @@ export function testsReducer(state = initialState, action) {
       return {
         ...state,
         tests: [...state.tests, action.payload]
+      };
+    case testActionTypes.LOAD_QUESTIONS:
+      return {
+        ...state,
+        questions: action.payload,
+        error: null
       };
     default:
       return state;

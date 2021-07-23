@@ -1,42 +1,42 @@
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { testActions } from "../../data/testsActions";
-import { Button, Form } from "react-bootstrap";
-import { useState } from "react";
+import { TestDetail } from "./TestDetail";
+import { TestQuestionViewer } from "./TestQuestionViewer";
 
 export const Test = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const test = useSelector(state => getCurrentTest(state, id))
   const error = useSelector(state => state.tests.error);
-
-  const [agreeToStart, setAgree] = useState(false);
+  const [isStarted, setStarted] = useState(false);
+  const questions = useSelector(state => state.tests.questions);
 
   useEffect(() => {
     if (!test) {
       dispatch(testActions.loadTestByIdApi(id));
     }
-  }, [id, test, dispatch])
+  }, [id, test, dispatch]);
+
+  useEffect(() => {
+    if (isStarted){
+      dispatch(testActions.loadQuestionsApi(id))
+    }
+  }, [isStarted, id, dispatch]);
 
   if (error) {
     return <h3 className="bg-warning text-center text-white p-2">{error}</h3>
   }
 
+  if (isStarted){
+    return <TestQuestionViewer questions={questions} />
+  }
+
   return (
-    test ?
-      <>
-        <h2 className="text-center">{test.title}</h2>
-        <div>{test.description}</div>
-        <div>Count of questions: <strong>{test.questionCount}</strong></div>
-
-        <Form.Group className="mt-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Agree to start" checked={agreeToStart} onChange={(e) => setAgree(e.target.checked)}/>
-        </Form.Group>
-
-        <Button variant="primary" className="ml-2" disabled={!agreeToStart}>Proceed</Button>
-        <Link to="/" className="btn btn-secondary m-2">Back</Link>
-      </>
+    test 
+      ? <TestDetail test={test} callback={() => setStarted(true)}/>
       : <h3 className="text-center">Loading...</h3>
   );
 }

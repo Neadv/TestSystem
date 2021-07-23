@@ -12,7 +12,12 @@ function loadTestById(id){
     return api.get('test/' + id);
 }
 
+function loadQuestion(testId){
+    return api.get("test/questions/" + testId);
+}
+
 export const testApi = {
     loadTestByCategory,
-    loadTestById
+    loadTestById,
+    loadQuestion
 };
