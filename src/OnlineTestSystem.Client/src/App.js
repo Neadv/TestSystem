@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Account } from "./components/Account/Account";
+import { PrivateRoute } from "./components/general/PrivateRoute";
 
 function App() {
   return (
@@ -8,9 +9,9 @@ function App() {
         <Route path="/account">
           <Account />
         </Route>
-        <Route>
+        <PrivateRoute>
           Not Found!
-        </Route>
+        </PrivateRoute>
       </Switch>
     </Router>
   );

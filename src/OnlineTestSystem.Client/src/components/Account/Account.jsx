@@ -11,7 +11,9 @@ export const Account = () => {
     <div className="account-wrapper">
       <Switch>
         <Route exact path="/account/login">
-          <Login login={auth.login} error={auth.error}/>
+          {!auth.user  
+            ? <Login login={auth.login} error={auth.error}/>
+            : <Redirect to="/" />}
         </Route>
         <Route exact path="/account/logout">
           <Logout logout={auth.logout}/>
