@@ -10,7 +10,17 @@ function App() {
           <Account />
         </Route>
         <PrivateRoute>
-          Not Found!
+          <Switch>
+            <Route path="/test">
+              <h1>Test</h1>
+            </Route>
+            <Route path="/test2">
+              <h2>Test2</h2>
+            </Route>
+            <Route>
+              Not found
+            </Route>
+          </Switch>
         </PrivateRoute>
       </Switch>
     </Router>

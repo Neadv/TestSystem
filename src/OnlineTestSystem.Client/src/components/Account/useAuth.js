@@ -7,10 +7,11 @@ export function useAuth() {
     const userState = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-    if (!userState.user) {
+    let user = userState.user
+    if (!user) {
         const token = getToken();
         if (token) {
-            const user = authService.authorize(token);
+            user = authService.authorize(token);
             if (user)
                 dispatch(userAction.userLogin(user));
         }
@@ -27,7 +28,7 @@ export function useAuth() {
     return {
         login,
         logout,
-        user: userState.user,
+        user: user,
         error: userState.error
     }
 }
