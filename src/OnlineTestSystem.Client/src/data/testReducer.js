@@ -25,6 +25,11 @@ export function testsReducer(state = initialState, action) {
         tests: action.payload,
         error: null
       };
+    case testActionTypes.ADD_TEST:
+      return {
+        ...state,
+        tests: [...state.tests, action.payload]
+      };
     default:
       return state;
   }

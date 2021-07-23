@@ -39,10 +39,28 @@ function loadTestsApi(categoryName) {
   }
 }
 
+function addTest(test) {
+  return { type: testActionTypes.ADD_TEST, payload: test };
+}
+
+function loadTestByIdApi(id){
+  return dispatch => {
+    testApi.loadTestById(id)
+      .then(res => {
+        if (res.data)
+          dispatch(addTest(res.data));
+      }).catch(err => {
+        dispatch(errorLoadTest("Not found"));
+      })
+  }
+}
+
 export const testActions = {
   loadCategories,
   errorLoadTest,
   loadCategoriesApi,
   loadTests,
-  loadTestsApi
+  loadTestsApi,
+  addTest,
+  loadTestByIdApi
 };

@@ -8,6 +8,11 @@ function loadTestByCategory(categoryName){
     });
 }
 
+function loadTestById(id){
+    return api.get('test/' + id);
+}
+
 export const testApi = {
-    loadTestByCategory
+    loadTestByCategory,
+    loadTestById
 };
