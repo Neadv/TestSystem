@@ -4,6 +4,7 @@ import { Button, Card, FormCheck } from "react-bootstrap";
 export const TestQuestionViewer = ({ questions = [], callback }) => {
     const [currentNumber, setNumber] = useState(0);
     const [selected, setSelected] = useState(-1);
+    const [answers, setAnswers] = useState([]);
     const currentQuestion = questions[currentNumber];
     const count = questions.length;
 
@@ -11,8 +12,12 @@ export const TestQuestionViewer = ({ questions = [], callback }) => {
         setSelected(-1);
         setNumber(currentNumber + 1);
 
-        if (currentNumber === count){
-            callback();
+        const newAnswers = answers.slice();
+        newAnswers.push(selected);
+        setAnswers(newAnswers);
+
+        if (currentNumber === count - 1){
+            callback(newAnswers);
         }
     };
 

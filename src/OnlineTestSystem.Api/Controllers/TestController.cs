@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineTestSystem.Api.Data.Repositories;
 using OnlineTestSystem.Api.Models;
 using OnlineTestSystem.Api.Models.Contracts;
 using OnlineTestSystem.Api.Models.Dto;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OnlineTestSystem.Api.Controllers
@@ -53,6 +55,29 @@ namespace OnlineTestSystem.Api.Controllers
             var questions = await _questionsRepository.LoadQuestionsByTest(id);
             var result = _mapper.Map<IEnumerable<TestQuestion>, IEnumerable<QuestionResponse>>(questions);
             return Ok(result);
+        }
+
+        [HttpPost("check/{id:int}")]
+        public async Task<ActionResult> CheckTest(int id, int[] answers)
+        {
+            var test = await _testRepository.GetTestById(id, User.Identity.Name);
+            if (test != null)
+            {
+                if (test.Questions.Count != answers.Length)
+                    return BadRequest();
+
+                var results = new bool[answers.Length];
+                var questions = test.Questions.ToList();
+                var score = 0;
+                for (int i = 0; i < results.Length; i++)
+                {
+                    results[i] = questions[i].CorrectOptions == answers[i];
+                    if (results[i])
+                        score++;
+                }
+                return Ok(new TestResultResponse { Score = score, Answers = results });
+            }
+            return NotFound();
         }
     }
 }

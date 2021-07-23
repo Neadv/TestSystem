@@ -31,7 +31,7 @@ export const Test = () => {
   }
 
   if (isStarted){
-    return <TestQuestionViewer questions={questions} />
+    return <TestQuestionViewer questions={questions} callback={answers => console.log(answers)}/>
   }
 
   return (
