@@ -9,7 +9,7 @@ namespace OnlineTestSystem.Api.Mapper
         public TestMappingProfile()
         {
             CreateMap<Test, TestResponse>()
-                .ForMember(t => t.QuestionCount, opt => opt.MapFrom(src => src.ApplicationUsers.Count))
+                .ForMember(t => t.QuestionCount, opt => opt.MapFrom(src => src.Questions.Count))
                 .ForMember(t => t.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null));
         }        
     }

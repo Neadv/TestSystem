@@ -22,6 +22,7 @@ namespace OnlineTestSystem.Api.Data.Contracts
 
             return await Set.Include(t => t.ApplicationUsers)
                 .Include(t => t.Category)
+                .Include(t => t.Questions)
                 .Where(t => t.ApplicationUsers.FirstOrDefault(u => u.UserName == username) != null)
                 .AsNoTracking()
                 .ToListAsync();
@@ -42,6 +43,7 @@ namespace OnlineTestSystem.Api.Data.Contracts
             return await Set
                 .Include(t => t.ApplicationUsers)
                 .Include(t => t.Category)
+                .Include(t => t.Questions)
                 .Where(t => t.Category.Name == categoryName && t.ApplicationUsers.FirstOrDefault(u => u.UserName == username) != null)
                 .AsNoTracking()
                 .ToListAsync();
@@ -52,6 +54,7 @@ namespace OnlineTestSystem.Api.Data.Contracts
             return await Set
                 .Include(t => t.ApplicationUsers)
                 .Include(t => t.Category)
+                .Include(t => t.Questions)
                 .FirstOrDefaultAsync(t => t.ApplicationUsers.FirstOrDefault(u => u.UserName == username) != null && t.TestId == id);
         }
     }
