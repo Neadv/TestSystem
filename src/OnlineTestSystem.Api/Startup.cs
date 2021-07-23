@@ -39,6 +39,7 @@ namespace OnlineTestSystem.Api
             services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddScoped<ITestRepository, TestRepository>();
+            services.AddScoped<IQuestionsRepository, QuestionsRepository>();
 
             services.AddCors();
 

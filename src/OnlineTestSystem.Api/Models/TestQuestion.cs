@@ -8,6 +8,8 @@ namespace OnlineTestSystem.Api.Models
         public string Question { get; set; }
         public ICollection<Option> Options { get; set; }
         public int CorrectOptions { get; set; }
+        public Test Test { get; set; }
+        public int TestId { get; set; }
 
         public class Option
         {
