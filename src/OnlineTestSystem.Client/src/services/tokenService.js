@@ -5,15 +5,15 @@ function saveToken(token) {
 }
 
 function getToken() {
-  return localStorage.get(tokenKey);
+  return localStorage.getItem(tokenKey);
 }
 
 function removeToken(){
-  localStorage.set(tokenKey, null);
+  localStorage.setItem(tokenKey, null);
 }
 
 function getUserFromToken(token) {
-  const data = jwtToken.split('.')[1];
+  const data = token.split('.')[1];
   const payload = JSON.parse(atob(data));
   if (payload) {
     return {

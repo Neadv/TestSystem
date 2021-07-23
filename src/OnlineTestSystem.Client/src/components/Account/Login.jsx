@@ -3,9 +3,10 @@ import { Form, Button } from "react-bootstrap";
 import { CardWrapper } from "../general/CardWrapper";
 import * as Yup from 'yup';
 
-export const Login = () => {
+
+export const Login = ({login, error}) => {
   const handleSubmit = values => {
-    alert(JSON.stringify(values));
+    login(values.username, values.password);
   };
   
   const formik = useFormik({
@@ -27,6 +28,7 @@ export const Login = () => {
   return (
     <CardWrapper title="Login" className="shadow" style={{width:"500px"}}>
       <Form onSubmit={formik.handleSubmit}>
+        {error && <div className="bg-danger rounded p-2 text-white mb-2">{error}</div>}
         <Form.Group className="mb-3">
           <Form.Label htmlFor="username">Username:</Form.Label>
           <Form.Control 
