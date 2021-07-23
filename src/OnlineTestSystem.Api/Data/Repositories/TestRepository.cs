@@ -21,6 +21,7 @@ namespace OnlineTestSystem.Api.Data.Contracts
             }
 
             return await Set.Include(t => t.ApplicationUsers)
+                .Include(t => t.Category)
                 .Where(t => t.ApplicationUsers.FirstOrDefault(u => u.UserName == username) != null)
                 .AsNoTracking()
                 .ToListAsync();
