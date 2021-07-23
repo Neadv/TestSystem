@@ -46,5 +46,13 @@ namespace OnlineTestSystem.Api.Data.Contracts
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task<Test> GetTestById(int id, string username)
+        {
+            return await Set
+                .Include(t => t.ApplicationUsers)
+                .Include(t => t.Category)
+                .FirstOrDefaultAsync(t => t.ApplicationUsers.FirstOrDefault(u => u.UserName == username) != null && t.TestId == id);
+        }
     }
 }

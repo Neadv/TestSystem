@@ -7,5 +7,7 @@ namespace OnlineTestSystem.Api.Models.Contracts
     {
         Task<IEnumerable<Test>> GetAssignedTests(string username);
         Task<IEnumerable<Test>> GetAssignedTests(string categoryName, string username);
+
+        Task<Test> GetTestById(int id, string username);
     }
 }

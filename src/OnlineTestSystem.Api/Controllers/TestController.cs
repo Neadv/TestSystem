@@ -35,5 +35,14 @@ namespace OnlineTestSystem.Api.Controllers
             var result = _mapper.Map<IEnumerable<Test>, IEnumerable<TestResponse>>(tests);
             return Ok(result);
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetTest(int id)
+        {
+            var test = await _testRepository.GetTestById(id, User.Identity.Name);
+            if (test != null)
+                return Ok(_mapper.Map<Test, TestResponse>(test));
+            return NotFound();
+        }
     }
 }
