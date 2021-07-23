@@ -2,10 +2,10 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { Login } from "./Login";
 import './Account.css';
 import { useAuth } from "./useAuth";
+import { Logout } from "./Logout";
 
 export const Account = () => {
   const auth = useAuth();
-  console.log(auth.user);
 
   return (
     <div className="account-wrapper">
@@ -14,7 +14,7 @@ export const Account = () => {
           <Login login={auth.login} error={auth.error}/>
         </Route>
         <Route exact path="/account/logout">
-          <h1>Logout</h1>
+          <Logout logout={auth.logout}/>
         </Route>
         <Route>
           <Redirect to="/account/login" />

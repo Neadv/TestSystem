@@ -1,5 +1,5 @@
 import * as accountApi from "../api/accountApi";
-import { getUserFromToken } from "../services/tokenService";
+import * as authService from "../services/authService";
 import { USER_LOGIN, USER_LOGIN_ERROR, USER_LOGOUT } from "./actionTypes"
 
 function userLogin(user) {
@@ -19,7 +19,7 @@ function userLoginApi(username, password) {
     accountApi.login(username, password)
       .then(res => {
         if (res.data?.token){
-          const user = getUserFromToken(res.data.token);
+          const user = authService.authorize(res.data.token)
           dispatch(userLogin(user));          
         }
       })

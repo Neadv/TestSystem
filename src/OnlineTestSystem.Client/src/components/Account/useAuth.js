@@ -1,17 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import * as userAction from "../../data/userAction";
-import { getToken, getUserFromToken } from "../../services/tokenService";
+import { getToken } from "../../services/tokenService";
 import * as authService from '../../services/authService';
 
-export function useAuth(){
+export function useAuth() {
     const userState = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-    if (!userState.user){
+    if (!userState.user) {
         const token = getToken();
-        authService.authorize(token);
-        const user = getUserFromToken(token);
-        dispatch(userAction.userLogin(user));
+        if (token) {
+            const user = authService.authorize(token);
+            if (user)
+                dispatch(userAction.userLogin(user));
+        }
     }
 
     const login = (username, password) => {

@@ -8,17 +8,19 @@ function getToken() {
   return localStorage.getItem(tokenKey);
 }
 
-function removeToken(){
-  localStorage.setItem(tokenKey, null);
+function removeToken() {
+  localStorage.setItem(tokenKey, '');
 }
 
 function getUserFromToken(token) {
-  const data = token.split('.')[1];
-  const payload = JSON.parse(atob(data));
-  if (payload) {
-    return {
-      username: payload.sub,
-    };
+  if (token) {
+    const data = token.split('.')[1];
+    const payload = JSON.parse(atob(data));
+    if (payload) {
+      return {
+        username: payload.sub,
+      };
+    }
   }
   return null;
 }
