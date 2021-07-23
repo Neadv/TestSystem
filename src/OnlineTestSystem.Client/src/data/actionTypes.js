@@ -10,8 +10,10 @@ export const userActionTypes = {
 
 const LOAD_TEST_CATEGORY = "LOAD_TEST_CATEGORY";
 const ERROR_TEST_LOAD = "ERROR_TEST_LOAD";
+const LOAD_TESTS = "LOAD_TESTS"; 
 
 export const testActionTypes = {
     LOAD_TEST_CATEGORY,
-    ERROR_TEST_LOAD
+    ERROR_TEST_LOAD,
+    LOAD_TESTS
 };
