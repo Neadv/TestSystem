@@ -20,6 +20,7 @@ export const Test = () => {
     if (!test) {
       dispatch(testActions.loadTestByIdApi(id));
     }
+    dispatch(testActions.clearResult());
   }, [id, test, dispatch]);
 
   useEffect(() => {

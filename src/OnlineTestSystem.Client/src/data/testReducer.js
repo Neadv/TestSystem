@@ -44,6 +44,11 @@ export function testsReducer(state = initialState, action) {
           error: null,
           result: action.payload
         }
+        case testActionTypes.CLEAR_RESULT:
+          return {
+            ...state,
+            result: null
+          }
     default:
       return state;
   }

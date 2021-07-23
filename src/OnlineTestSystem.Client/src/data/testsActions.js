@@ -72,11 +72,11 @@ function loadQuestionsApi(testId) {
   }
 }
 
-function checkResult(result){
-  return {type: testActionTypes.CHECK_RESULT, payload: result};
+function checkResult(result) {
+  return { type: testActionTypes.CHECK_RESULT, payload: result };
 }
 
-function checkResultApi(testId, answers){
+function checkResultApi(testId, answers) {
   return dispatch => {
     testApi.checkTest(testId, answers)
       .then(res => {
@@ -86,6 +86,10 @@ function checkResultApi(testId, answers){
         dispatch(errorLoadTest("Error"));
       })
   }
+}
+
+function clearResult() {
+  return { type: testActionTypes.CLEAR_RESULT };
 }
 
 export const testActions = {
@@ -99,5 +103,6 @@ export const testActions = {
   loadQuestions,
   loadQuestionsApi,
   checkResult,
-  checkResultApi
+  checkResultApi,
+  clearResult
 };

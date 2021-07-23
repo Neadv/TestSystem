@@ -13,7 +13,8 @@ const ERROR_TEST_LOAD = "ERROR_TEST_LOAD";
 const LOAD_TESTS = "LOAD_TESTS"; 
 const ADD_TEST = "ADD_TEST";
 const LOAD_QUESTIONS = "LOAD_QUESTIONS";
-const CHECK_RESULT = "CHECK_RESULT"
+const CHECK_RESULT = "CHECK_RESULT";
+const CLEAR_RESULT = "CLEAR_RESULT";
 
 export const testActionTypes = {
     LOAD_TEST_CATEGORY,
@@ -21,5 +22,6 @@ export const testActionTypes = {
     LOAD_TESTS,
     ADD_TEST,
     LOAD_QUESTIONS,
-    CHECK_RESULT
+    CHECK_RESULT,
+    CLEAR_RESULT
 };
