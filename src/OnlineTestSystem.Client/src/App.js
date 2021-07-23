@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Account } from "./components/Account/Account";
+import { AssignedTests } from "./components/AssignedTests/AssignedTests";
 import { PrivateRoute } from "./components/general/PrivateRoute";
 import { Layout } from "./components/Layout/Layout";
 
@@ -13,11 +14,8 @@ function App() {
         <PrivateRoute>
           <Layout>
             <Switch>
-              <Route path="/test">
-                <h1>Test</h1>
-              </Route>
-              <Route path="/test2">
-                <h2>Test2</h2>
+              <Route path="/">
+                <AssignedTests />
               </Route>
               <Route>
                 Not found

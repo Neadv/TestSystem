@@ -1,11 +1,15 @@
-import { Container } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { NavigationBar } from "./NavigationBar";
 
 export const Layout = ({ children }) => (
   <div>
     <NavigationBar />
     <Container>
-      {children}
+      <Card className="my-3">
+        <Card.Body>
+          {children}
+        </Card.Body>
+      </Card>
     </Container>
   </div>
 );
