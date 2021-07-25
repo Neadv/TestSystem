@@ -28,7 +28,7 @@ namespace OnlineTestSystem.Api
             services.AddControllers();
 
             services.AddDbContext<ApplicationContext>(o => 
-                o.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+                o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
 
