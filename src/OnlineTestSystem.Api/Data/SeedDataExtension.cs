@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using OnlineTestSystem.Api.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace OnlineTestSystem.Api.Data
@@ -25,6 +28,7 @@ namespace OnlineTestSystem.Api.Data
                 var context = service.GetRequiredService<ApplicationContext>();
                 var userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
                 var configuration = service.GetRequiredService<IConfiguration>();
+                var environment = service.GetRequiredService<IHostEnvironment>();
 
                 await context.Database.MigrateAsync();
 
@@ -47,14 +51,14 @@ namespace OnlineTestSystem.Api.Data
 
                 if (await context.Tests.CountAsync() == 0)
                 {
-                    var tests = await CreateSeedData(configuration, userManager);
+                    var tests = await CreateSeedData(configuration, environment, userManager);
                     await context.Tests.AddRangeAsync(tests);
                     await context.SaveChangesAsync();
                 }
             }
         } 
         
-        private async static Task<IEnumerable<Test>> CreateSeedData(IConfiguration configuration, UserManager<ApplicationUser> userManager)
+        private async static Task<IEnumerable<Test>> CreateSeedData(IConfiguration configuration, IHostEnvironment env, UserManager<ApplicationUser> userManager)
         {
             var username1 = configuration["SeedData:TestUser1:Username"];
             var user1 = await userManager.FindByNameAsync(username1);
@@ -65,207 +69,31 @@ namespace OnlineTestSystem.Api.Data
             var user1Category = new Category { Name = "User1Category" };
             var user2Category = new Category { Name = "User2Category" };
 
-            var mathTest = new Test
-            {
-                Category = mathCategory,
-                Description = "Test for both users. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-                Title = "Math test",
-                Questions = new List<TestQuestion>
-                {
-                    new TestQuestion
-                    {
-                        Question = "First question. consectetur adipiscing elit, sed do eiusmod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. do" },
-                        },
-                        CorrectOptions = 2
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Second question. sed do eiusmod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do " },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. do" },
-                        },
-                        CorrectOptions = 4
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Third question. incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. do" },
-                        },
-                        CorrectOptions = 1
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Fourth question. consectetur adipismod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                        },
-                        CorrectOptions = 3
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Fifth question. consectetur adipiscing elit, sed do eiusmod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                        },
-                        CorrectOptions = 1
-                    }
-                }
-            };
-            mathTest.ApplicationUsers = new List<ApplicationUser>();
-            mathTest.ApplicationUsers.Add(user1);
-            mathTest.ApplicationUsers.Add(user2);
-            mathCategory.Tests = new List<Test> { mathTest };
 
-            var user1Test = new Test
+            var tests = new List<Test>();
+            using (var sr = new StreamReader(env.ContentRootPath + "/SeedData.json"))
             {
-                Category = user1Category,
-                Description = "Test for first user. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-                Title = "Test for first user",
-                Questions = new List<TestQuestion>
-                {
-                    new TestQuestion
-                    {
-                        Question = "First question. consectetur adipiscing elit, sed do eiusmod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. do" },
-                        },
-                        CorrectOptions = 2
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Second question. sed do eiusmod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do " },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. do" },
-                        },
-                        CorrectOptions = 1
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Third question. incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. do" },
-                        },
-                        CorrectOptions = 3
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Fourth question. consectetur adipismod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                        },
-                        CorrectOptions = 1
-                    },
-                }
-            };
-            user1Test.ApplicationUsers = new List<ApplicationUser> { user1 };
-            user1Category.Tests = new List<Test> { user1Test };
+                var text = await sr.ReadToEndAsync();
+                tests = JsonSerializer.Deserialize<List<Test>>(text);
+            }
 
-            var user2Test = new Test
+            if (tests.Count != 0)
             {
-                Category = user2Category,
-                Description = "Test for second user. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-                Title = "Test for second user",
-                Questions = new List<TestQuestion>
-                {
-                    new TestQuestion
-                    {
-                        Question = "First question. consectetur adipiscing elit, sed do eiusmod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                        },
-                        CorrectOptions = 3
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Second question. sed do eiusmod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do " },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. do" },
-                        },
-                        CorrectOptions = 1
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Third question. incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. do" },
-                        },
-                        CorrectOptions = 3
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Fourth question. consectetur adipismod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                            new TestQuestion.Option { Value = "Option 4. sed do" },
-                        },
-                        CorrectOptions = 1
-                    },
-                    new TestQuestion
-                    {
-                        Question = "Fifth question. consectetur adipiscing elit, sed do eiusmod tempor incididunt?",
-                        Options = new TestQuestion.Option[]
-                        {
-                            new TestQuestion.Option { Value = "Option 1. sed do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 2. do eiusmod" },
-                            new TestQuestion.Option { Value = "Option 3. sed do" },
-                        },
-                        CorrectOptions = 2
-                    }
-                }
-            };
-            user2Test.ApplicationUsers = new List<ApplicationUser> { user2 };
-            user2Category.Tests = new List<Test> { user2Test };
+                tests[0].Category = mathCategory;
+                tests[0].ApplicationUsers = new List<ApplicationUser>();
+                tests[0].ApplicationUsers.Add(user1);
+                tests[0].ApplicationUsers.Add(user2);
+                mathCategory.Tests = new List<Test> { tests[0] };
 
-            return new Test[] { mathTest, user1Test, user2Test};
+                tests[1].Category = user1Category;
+                tests[1].ApplicationUsers = new List<ApplicationUser> { user1 };
+                user1Category.Tests = new List<Test> { tests[1] };
+
+                tests[2].Category = user2Category;
+                tests[2].ApplicationUsers = new List<ApplicationUser> { user2 };
+                user2Category.Tests = new List<Test> { tests[2] };
+            }
+            return tests;
         }
     }
 }
